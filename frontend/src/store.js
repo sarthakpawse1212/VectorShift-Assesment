@@ -9,6 +9,7 @@ import {
   } from 'reactflow';
 
 export const useStore = create((set, get) => ({
+    nodeIDs: {},
     nodes: [],
     edges: [],
     getNodeID: (type) => {
@@ -40,13 +41,32 @@ export const useStore = create((set, get) => ({
         edges: addEdge({...connection, type: 'smoothstep', animated: true, markerEnd: {type: MarkerType.Arrow, height: '20px', width: '20px'}}, get().edges),
       });
     },
+    // Node form fields write into Zustand so submit can read the latest graph data.
     updateNodeField: (nodeId, fieldName, fieldValue) => {
       set({
         nodes: get().nodes.map((node) => {
           if (node.id === nodeId) {
-            node.data = { ...node.data, [fieldName]: fieldValue };
+            return {
+              ...node,
+              data: { ...node.data, [fieldName]: fieldValue },
+            };
           }
   
+          return node;
+        }),
+      });
+    },
+    // Batch related node data updates so derived fields stay in sync.
+    updateNodeData: (nodeId, partialData) => {
+      set({
+        nodes: get().nodes.map((node) => {
+          if (node.id === nodeId) {
+            return {
+              ...node,
+              data: { ...node.data, ...partialData },
+            };
+          }
+
           return node;
         }),
       });
