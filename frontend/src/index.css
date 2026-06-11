@@ -337,6 +337,29 @@ textarea {
   padding: var(--space-3) var(--space-4);
 }
 
+.submit-status {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.submit-status__success,
+.submit-status__error {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.submit-status__success {
+  color: var(--color-success);
+  font-weight: var(--font-weight-semibold);
+}
+
+.submit-status__error {
+  color: var(--color-danger);
+  font-weight: var(--font-weight-semibold);
+}
+
 .submit-button {
   min-width: 112px;
   min-height: 40px;
@@ -358,6 +381,12 @@ textarea {
 
 .submit-button:active {
   transform: translateY(1px);
+}
+
+.submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.66;
+  transform: none;
 }
 
 .submit-button:focus-visible,
@@ -389,6 +418,8 @@ textarea {
   }
 
   .submit-bar {
+    align-items: stretch;
+    flex-direction: column;
     justify-content: stretch;
   }
 
