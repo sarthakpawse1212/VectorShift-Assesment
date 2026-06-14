@@ -1,7 +1,7 @@
 // submit.js
 
 import { useState } from 'react';
-import { shallow } from 'zustand/shallow';
+import { useShallow } from 'zustand/react/shallow';
 import { parsePipeline } from './api/pipelineApi';
 import { useStore } from './store';
 
@@ -11,7 +11,7 @@ const selector = (state) => ({
 });
 
 export const SubmitButton = () => {
-  const { nodes, edges } = useStore(selector, shallow);
+  const { nodes, edges } = useStore(useShallow(selector));
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
